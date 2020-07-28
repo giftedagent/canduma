@@ -1,15 +1,28 @@
-version: '3.1'
+version: "3.8"
 
 services:
+  canduma:
+    image: 442583735133.dkr.ecr.ap-northeast-1.amazonaws.com/commons-payments_devcontainer:latest
+    tty: true
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - cargo-cache:/usr/local/cargo/registry
+      - target-cache:/app/target
   pg:
     image: postgres:12-alpine
     command:
-      - 'postgres'
-      - '-c'
-      - 'max_connections=100'
-      - '-c'
-      - 'shared_buffers=256MB'
+      - "postgres"
+      - "-c"
+      - "max_connections=100"
+      - "-c"
+      - "shared_buffers=256MB"
     environment:
       POSTGRES_PASSWORD: canduma
     ports:
       - 5432:5432
+volumes:
+  cargo-cache:
+  target-cache:
